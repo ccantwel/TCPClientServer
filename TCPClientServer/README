@@ -1,0 +1,43 @@
+NAME: CHANCE CANTWELL		STUDENT ID #: 0792138
+COURSE: CIS3210             ASSIGNMENT: 1 - TCP CLIENT/SERVER FOR FILE TRANSFER
+DATE: October 5, 2017
+____________________________________________________________________________________________
+COMPILING THE PROGRAM
+
+In order to get this program, navigate to the ChanceCantwellA1 directory (not in bin, src, or include)
+and type "make" at command prompt [without quotes].  If there are any .o files located in the directory,
+they can be removed by typing "make clean" at the command prompt [without quotes]. 
+____________________________________________________________________________________________
+OPERATING THE PROGRAM
+
+In order to start the components of the assignment, type the following commands without quotes at the command prompt
+after the compiling step:
+Client: "bin/client <yourhostname>:<yourportnumber> <yourfilename> <yourbuffersize>"
+Server: "bin/server <yourportnumber>"
+You can replace <yourhostname>, <yourportnumber>, <yourfilename> and <yourbuffer> with whatever you decide.  For example,
+for a host name of "percy.socs.uoguelph.ca", port number of 12008, filename of "testing.txt", and buffer size of 500,
+the commands entered into the command prompt for client and server would look like the following:
+
+bin/client percy.socs.uoguelph.ca:12008 testing.txt 500
+bin/server 12008
+
+If a buffer size is not provided, the client program will use a default buffer size of 500 bytes.
+
+A script has been provided in the ChanceCantwellA1 directory called runLocalhost.sh.  This may be used to
+run a series of 10 client programs using "localhost" as hostname, 12008 as port number, "testing.txt" as filename,
+and 500 as buffer size.  This script can be run by typing "./runLocalhost.sh" at the command prompt [without quotes] 
+instead of the client command.  If an error message is displayed, the permissions for the script execution can be set
+by typing "chmod +x runLocalhost.sh" at the command prompt [without quotes].
+
+The components of this assignment are a TCP client and a TCP server program.  The client sends the contents of a text 
+file to the server where it is printed to standard output.  The client receives the same contents back from the server 
+and prints them to standard output as well.  At the end of the operation, the client prints to standard output the
+total number of bytes received, as well as the total amount of time the process took to execute.
+____________________________________________________________________________________________
+ANY LIMITATIONS?
+
+Running the runLocalhost.sh script causes the client program to exit with a "Segmentation Fault" error.  This has been documented
+in src/TCPclient.c.  Other than that, client and server programs has been tested to ensure that it works as expected.  
+____________________________________________________________________________________________
+
+(C) CHANCE CANTWELL.  10/05/2017
