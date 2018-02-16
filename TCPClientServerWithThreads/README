@@ -1,0 +1,39 @@
+NAME: CHANCE CANTWELL		STUDENT ID #: 0792138
+COURSE: CIS3210             ASSIGNMENT: 2 - TCP CLIENT/SERVER FOR FILE TRANSFER
+DATE: October 31, 2017
+____________________________________________________________________________________________
+COMPILING THE PROGRAM
+
+In order to get this program, navigate to the ChanceCantwellA1 directory (not in bin, src, or include) and type "make" at command prompt [without quotes].  If there are any .o files located in the directory, they can be removed by typing "make clean" at the command prompt [without quotes]. 
+____________________________________________________________________________________________
+OPERATING THE PROGRAM
+
+In order to start the components of the assignment, type the following commands without quotes at the command prompt after the compiling step:
+Client: "bin/client <yourhostname>:<yourportnumber> <yourfilename> <yourchunksize>"
+Server: "bin/server <yourportnumber>"
+You can replace <yourhostname>, <yourportnumber>, <yourfilename> and <yourchunksize> with whatever you decide.  For example, for a host name of "ginny.socs.uoguelph.ca", port number of 12008, filename of "testing.txt", and chunk size of 500, the commands entered into the command prompt for client and server would look like the following:
+
+bin/client ginny.socs.uoguelph.ca:12008 testing.txt 500
+bin/server 12008
+
+If a chunk size is not provided, the client program will use a default chunk size of 500 bytes.
+
+The components of this assignment are a TCP client and a TCP server program.  The client first sends a filename, file size and chunk size to the server for the creation of buffers and a list of active transfers, and then sends the contents of the file to the server.  The server maintains a list of active transfers while writing the file contents to a file on its own disk.  The client receives the same contents back from the server, but does not print them to standard output.  At the end of the operation, the client prints to standard output the total number of bytes received, as well as the total amount of time the process took to execute.
+
+The key difference between this and the previous assignment is the use of threads to permit multiple concurrent client connections to the server.  Also, mutexes and condition variables have been used to maintain a list of active file transfers and an exit control flag, which is set by a user interface thread when the user wants to terminate the server application.
+
+It was discovered during the testing process that while using "localhost" as hostname, the server would open the same file for writing that the client had open for reading, causing the file to be empty and nothing being transferred.  To solve this, a series of local test file names have been defined in the TCPHeader.h file (in the include directory) that replace the name of the server's writing to file when on localhost.  When two clients try to send information from files with the same name, the server changes the second instance of the filename by replacing the last character before the file extension with a different, random character.  For example, if the original filename was "ShakespereHamlet.txt", then the newly modified filename would be something like "ShakespereHamleq.txt".
+
+A script has been provided in the ChanceCantwellA2 directory called runLocalhost.sh.  This may be used to run a series of 2 client programs using "localhost" as hostname, 12008 as port number, and 500 as chunk size size.  This script can be run by typing "./runLocalhost.sh" at the command prompt [without quotes] instead of the client command.  If an error message is displayed, the permissions for the script execution can be set
+by typing "chmod +x runLocalhost.sh" at the command prompt [without quotes].  The first client sends a file called "ShakespereHamlet.txt" to the server, while the second client sends a file called "VirtualLightLong.txt" to the server.
+
+A second script has been provided in the ChanceCantwellA2 directory called runGinny.sh.  This may be used to run a series of 2 client programs using "ginny.socs.uoguelph.ca" as hostname, 12008 as port number, and 500 as chunk size.  This script can be run by typing "./runLocalhost.sh" at the command prompt [without quotes] instead of the client command.  If an error message is displayed, the permissions for the script execution can be set
+by typing "chmod +x runGinny.sh" at the command prompt [without quotes].  The first client sends a file with name "ShakespereHamlet.txt" to the server, while the second client sends a file with name "VirtualLightLong.txt" to the server.
+
+____________________________________________________________________________________________
+ANY LIMITATIONS?
+
+When displaying the transfer list content in the UI thread, only one client is appearing at any time.  More testing is needed to determine whether multiple clients are connecting to the server concurrently.
+____________________________________________________________________________________________
+
+(C) CHANCE CANTWELL.  10/31/2017
